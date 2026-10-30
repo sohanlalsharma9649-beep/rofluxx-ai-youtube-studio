@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b16">
+<title>ROFLUXX AI YouTube Studio</title>
+<style>
+:root{--bg:#080b16;--panel:#11182a;--panel2:#172139;--line:#283653;--txt:#f4f7ff;--muted:#aab6ce;--cyan:#64e5ff;--pink:#ff4fa3;--green:#7df0b0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#19284b 0,transparent 35%),var(--bg);color:var(--txt);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:22px max(16px,calc((100% - 1100px)/2));border-bottom:1px solid var(--line);background:#080b16e8;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--pink));display:grid;place-items:center;color:#07101b;font-weight:1000;font-size:20px}.brand h1{font-size:19px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
+main{max-width:1100px;margin:auto;padding:22px 16px 60px}.hero{padding:22px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(120deg,#16223b,#101729);margin-bottom:18px}.hero h2{margin:0 0 7px;font-size:clamp(23px,5vw,34px)}.hero p{color:var(--muted);margin:0;line-height:1.5}.pill{display:inline-block;border:1px solid #31516b;color:var(--cyan);border-radius:30px;padding:5px 10px;font-size:11px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:17px;min-width:0}.wide{grid-column:1/-1}.card h3{margin:0 0 14px;font-size:17px}.sub{font-size:12px;color:var(--muted);line-height:1.5;margin-top:8px}
+label{display:block;font-size:13px;color:#d8e2f7;margin:11px 0 6px}input,textarea,select{width:100%;background:#0a1020;color:var(--txt);border:1px solid #334361;border-radius:10px;padding:12px;font:inherit;min-width:0}textarea{min-height:95px;resize:vertical}input[type=file]{padding:10px}input[type=range]{padding:0;accent-color:var(--cyan)}button,.btn{border:0;border-radius:11px;padding:12px 15px;font-weight:750;background:linear-gradient(100deg,var(--cyan),#91baff);color:#07101b;cursor:pointer;font-size:14px;display:inline-flex;justify-content:center;align-items:center;gap:7px;text-decoration:none}button.secondary,.btn.secondary{background:#202e49;color:var(--txt);border:1px solid #3b4d6e}button.pink{background:linear-gradient(100deg,var(--pink),#ff9fca);color:#230817}button:disabled{opacity:.45;cursor:not-allowed}.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.video-wrap{background:#03050a;border-radius:13px;overflow:hidden;display:grid;place-items:center;min-height:180px}.video-wrap video{width:100%;max-height:380px;object-fit:contain}.status{font-size:12px;color:var(--muted);margin-top:9px;white-space:pre-wrap}.status.ok{color:var(--green)}.status.err{color:#ff9eae}.preview{max-width:100%;border:1px solid var(--line);border-radius:10px}.meter{height:8px;border-radius:20px;background:#25314a;overflow:hidden;margin-top:10px}.meter span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--pink));transition:width .2s}.notice{padding:12px;border-radius:12px;background:#292318;border:1px solid #66512b;color:#f4dca8;font-size:12px;line-height:1.5;margin-top:12px}.check{display:flex;gap:9px;align-items:center}.check input{width:auto}.small{font-size:11px;color:var(--muted)}footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}header{padding:14px 16px}.hero{padding:17px}.row>*{min-width:100%}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">R</div><div><h1>ROFLUXX AI YouTube Studio</h1><p>Creator toolkit · Runs in your browser</p></div></div></header>
+<main>
+<section class="hero"><span class="pill">BETA · FREE STARTER</span><h2>Your video. Your channel. Your control.</h2><p>Upload a video, trim and reframe it, create SEO text and a thumbnail, then send it to YouTube as <b>Unlisted</b>. Review it yourself before making it public.</p></section>
+<div class="grid">
+<section class="card">
+<h3>01 · Choose a video</h3>
+<label for="file">Select video from your phone or computer</label><input id="file" type="file" accept="video/*">
+<div class="video-wrap" style="margin-top:12px"><video id="source" controls playsinline></video></div>
+<div id="fileInfo" class="status">No video selected yet.</div>
+<p class="sub">Your source video stays in this browser; it is not sent to this website's server.</p>
+</section>
+<section class="card">
+<h3>02 · Edit for Shorts or Full Video</h3>
+<label for="format">Output format</label><select id="format"><option value="short">YouTube Shorts · Vertical 9:16</option><option value="full">Full video · Landscape 16:9</option><option value="square">Square · 1:1</option></select>
+<div class="row"><div><label for="start">Start time (seconds)</label><input id="start" type="number" min="0" value="0" step=".1"></div><div><label for="end">End time (seconds)</label><input id="end" type="number" min="0" value="0" step=".1"></div></div>
+<label for="caption">Optional on-screen caption</label><input id="caption" placeholder="e.g. Wait for the final moment!">
+<label class="check"><input id="burn" type="checkbox" checked> Add caption to exported video</label>
+<button id="render" disabled style="width:100%;margin-top:13px">Render edited video</button>
+<div class="meter"><span id="renderBar"></span></div><div id="renderStatus" class="status">Choose a video to enable editing.</div>
+<a id="downloadEdit" class="btn secondary" hidden download="rofluxx-edited.webm">Download edited video</a>
+</section>
+<section class="card">
+<h3>03 · Generate YouTube SEO</h3>
+<label for="topic">Video topic / main keywords</label><input id="topic" placeholder="e.g. Free Fire clutch gameplay, travel vlog">
+<label for="language">Language</label><select id="language"><option>Hindi</option><option>English</option><option>Hinglish</option><option>Other</option></select>
+<label for="kind">Video category</label><select id="kind"><option value="20">Gaming</option><option value="22">People & Blogs</option><option value="24">Entertainment</option><option value="10">Music</option><option value="17">Sports</option><option value="26">Howto & Style</option><option value="27">Education</option><option value="19">Travel & Events</option><option value="23">Comedy</option><option value="28">Science & Technology</option></select>
+<label for="channel">Channel / brand name</label><input id="channel" value="ROFLUXX">
+<button id="seo" style="width:100%;margin-top:13px">Create title + description + tags</button>
+<label for="title">Title</label><input id="title" maxlength="100" placeholder="Your YouTube title">
+<label for="description">Description</label><textarea id="description" placeholder="Description will appear here"></textarea>
+<label for="tags">Tags (comma separated)</label><textarea id="tags" placeholder="video tags"></textarea>
+<div class="row"><button class="secondary" id="copySeo">Copy SEO text</button><button class="secondary" id="thumbBtn">Make thumbnail</button></div>
+<p class="sub">SEO suggestions are generated from your topic; they are not live trend data or a promise of views.</p>
+</section>
+<section class="card">
+<h3>04 · Thumbnail maker</h3>
+<label for="thumbText">Thumbnail text</label><input id="thumbText" placeholder="BIG MOMENT!">
+<label for="thumbColor">Text background</label><select id="thumbColor"><option value="#ed236d">Pink</option><option value="#1254c8">Blue</option><option value="#111827">Dark</option><option value="#e7a800">Yellow</option></select>
+<canvas id="thumb" width="1280" height="720" class="preview" style="width:100%;height:auto;background:#172139"></canvas>
+<div class="row" style="margin-top:10px"><button id="downloadThumb" class="secondary">Download thumbnail PNG</button></div>
+<p class="sub">This creates a simple editable text thumbnail. You can add your own photo as the video background in a later version.</p>
+</section>
+<section class="card wide">
+<h3>05 · Connect YouTube and upload Unlisted</h3>
+<label for="clientId">Google OAuth Web Client ID</label><input id="clientId" placeholder="123456789-xxxx.apps.googleusercontent.com" autocomplete="off">
+<div class="row"><button id="connect" class="secondary">Connect YouTube account</button><span id="authStatus" class="status">Not connected</span></div>
+<label class="check"><input id="confirmRights" type="checkbox"> I own this video or have permission to upload it.</label>
+<button id="upload" class="pink" disabled style="width:100%;margin-top:12px">Upload to YouTube as UNLISTED</button>
+<div class="meter"><span id="uploadBar"></span></div><div id="uploadStatus" class="status">Connect your YouTube account to enable upload.</div>
+<div id="uploadedLink" class="status"></div>
+<div class="notice"><b>Important:</b> YouTube uploads use your Google authorization and the official YouTube Data API. Google may require OAuth app setup, testing, verification, or quota approval. This app deliberately sets privacy to <b>unlisted</b>; it does not publish videos automatically. Never share your OAuth client secret or access token.</div>
+</section>
+<section class="card wide">
+<h3>What this first release can and cannot do</h3>
+<p class="sub">Works now in supported browsers: local video preview, trim, aspect-ratio reframing, optional caption overlay, WebM export, topic-based SEO draft, PNG text thumbnail, Google OAuth connection and YouTube Unlisted upload.</p>
+<p class="sub">Not included yet: automatic AI scene/highlight detection, automatic music selection, professional effects, live trend research, cloud storage, scheduled uploads, analytics dashboard or guaranteed monetization. Browser video rendering can be slow and may fail for very large files or on low-memory phones. Keep the page open while rendering/uploading.</p>
+</section>
+</div>
+</main>
+<footer>ROFLUXX AI YouTube Studio · Starter build · Keep creative control and review every upload.</footer>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+const $=id=>document.getElementById(id);
+let sourceFile=null, editedBlob=null, accessToken=null, tokenClient=null, videoUrl=null;
+const source=$('source');
+function setStatus(id,msg,type=''){const el=$(id);el.textContent=msg;el.className='status '+type}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('file').addEventListener('change',e=>{
+ const f=e.target.files[0]; if(!f)return; sourceFile=f; editedBlob=null;
+ if(videoUrl)URL.revokeObjectURL(videoUrl); videoUrl=URL.createObjectURL(f); source.src=videoUrl; source.load();
+ $('fileInfo').textContent=`${f.name} · ${(f.size/1024/1024).toFixed(1)} MB · ${f.type||'video'}`;
+ $('end').value='0'; $('render').disabled=false; $('downloadEdit').hidden=true;
+ source.onloadedmetadata=()=>{$('end').value=source.duration.toFixed(1);$('start').max=source.duration;$('end').max=source.duration};
+ drawThumb();
+});
+$('render').addEventListener('click',async()=>{
+ if(!sourceFile)return;
+ const start=Math.max(0,Number($('start').value)||0), end=Math.min(source.duration,Number($('end').value)||source.duration);
+ if(end<=start){setStatus('renderStatus','End time must be after start time.','err');return}
+ const fmt=$('format').value, dims=fmt==='short'?[720,1280]:fmt==='square'?[900,900]:[1280,720];
+ const canvas=document.createElement('canvas');canvas.width=dims[0];canvas.height=dims[1];const ctx=canvas.getContext('2d');
+ const v=document.createElement('video');v.src=videoUrl;v.muted=false;v.playsInline=true;v.preload='auto';
+ await new Promise((res,rej)=>{v.onloadedmetadata=res;v.onerror=rej});
+ v.currentTime=start;await new Promise(res=>v.onseeked=res);
+ const canvasStream=canvas.captureStream(30);let audioTracks=[];
+ try{const vs=v.captureStream?v.captureStream():v.mozCaptureStream?.();if(vs)audioTracks=vs.getAudioTracks()}catch(e){}
+ const stream=new MediaStream([...canvasStream.getVideoTracks(),...audioTracks]);
+ const types=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+ const mime=types.find(t=>MediaRecorder.isTypeSupported(t))||'';
+ let recorder;try{recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined)}catch(e){setStatus('renderStatus','This browser does not support video export. Try Chrome.','err');return}
+ const chunks=[];recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+ recorder.onstop=()=>{editedBlob=new Blob(chunks,{type:recorder.mimeType||'video/webm'});const u=URL.createObjectURL(editedBlob);$('downloadEdit').href=u;$('downloadEdit').hidden=false;$('downloadEdit').textContent=`Download edited video (${(editedBlob.size/1048576).toFixed(1)} MB)`;setStatus('renderStatus','Export complete. Download it or upload it below.','ok');$('renderBar').style.width='100%';};
+ const draw=()=>{const vw=v.videoWidth,vh=v.videoHeight,scale=Math.max(dims[0]/vw,dims[1]/vh),sw=dims[0]/scale,sh=dims[1]/scale,sx=(vw-sw)/2,sy=(vh-sh)/2;ctx.fillStyle='#05070c';ctx.fillRect(0,0,...dims);ctx.drawImage(v,sx,sy,sw,sh,0,0,...dims);
+  if($('burn').checked&&$('caption').value.trim()){const text=$('caption').value.trim();ctx.font=`bold ${Math.round(dims[0]*.055)}px system-ui`;ctx.textAlign='center';ctx.lineWidth=7;ctx.strokeStyle='#000';ctx.fillStyle='#fff';ctx.strokeText(text,dims[0]/2,dims[1]*.82,dims[0]*.88);ctx.fillText(text,dims[0]/2,dims[1]*.82,dims[0]*.88)}
+ };
+ recorder.start(1000);let raf;const tick=()=>{draw();const p=Math.max(0,Math.min(1,(v.currentTime-start)/(end-start)));$('renderBar').style.width=(p*100)+'%';setStatus('renderStatus',`Rendering ${(p*100).toFixed(0)}% · Keep this tab open.`);if(v.currentTime>=end||v.ended){cancelAnimationFrame(raf);recorder.stop();v.pause();stream.getTracks().forEach(t=>t.stop())}else raf=requestAnimationFrame(tick)};
+ v.currentTime=start;await new Promise(res=>v.onseeked=res);try{await v.play();tick()}catch(e){recorder.stop();setStatus('renderStatus','Could not play source video. Tap play permission and retry.','err')}
+});
+function makeSeo(){
+ const topic=$('topic').value.trim()||'new video',lang=$('language').value,brand=$('channel').value.trim()||'ROFLUXX',short=$('format').value==='short';
+ const title=(short?`${topic} 🔥 | ${brand} #Shorts`:`${topic} | ${brand}`).slice(0,100);
+ const tags=[...new Set((topic+' '+brand+' youtube video '+(short?'shorts short video':'full video')+' '+lang).toLowerCase().split(/[\s,]+/).filter(x=>x.length>2))].slice(0,18);
+ const desc=`${topic}\n\n${brand} पर ऐसे ही वीडियो देखने के लिए चैनल को Subscribe करें।\nवीडियो पसंद आए तो Like, Comment और Share करें।\n\n${short?'#Shorts #YouTubeShorts':'#YouTube #Video'} #${brand.replace(/[^a-z0-9]/gi,'')}\n\nनोट: यह वीडियो तभी अपलोड करें जब इसके सभी फुटेज, संगीत और अन्य सामग्री के अधिकार आपके पास हों।`;
+ $('title').value=title;$('description').value=desc;$('tags').value=tags.join(', ');$('thumbText').value=topic.toUpperCase().slice(0,28);drawThumb();
+}
+$('seo').onclick=makeSeo;
+$('copySeo').onclick=async()=>{const t=`TITLE\n${$('title').value}\n\nDESCRIPTION\n${$('description').value}\n\nTAGS\n${$('tags').value}`;try{await navigator.clipboard.writeText(t);setStatus('renderStatus','SEO copied to clipboard.','ok')}catch(e){setStatus('renderStatus','Clipboard permission unavailable; copy the fields manually.','err')}};
+function drawThumb(){const c=$('thumb'),x=c.getContext('2d'),bg=$('thumbColor').value;x.fillStyle='#0b1224';x.fillRect(0,0,c.width,c.height);const g=x.createLinearGradient(0,0,c.width,c.height);g.addColorStop(0,bg);g.addColorStop(1,'#111827');x.fillStyle=g;x.fillRect(0,0,c.width,c.height);x.fillStyle='rgba(255,255,255,.12)';for(let i=0;i<8;i++)x.fillRect(i*180-80,0,65,720);x.fillStyle='#fff';x.font='900 110px system-ui';x.textAlign='center';x.textBaseline='middle';const txt=$('thumbText').value||'YOUR VIDEO';const words=txt.split(' ');let lines=[],line='';for(const w of words){if((line+' '+w).trim().length>16){lines.push(line);line=w}else line=(line+' '+w).trim()}if(line)lines.push(line);lines=lines.slice(0,3);lines.forEach((l,i)=>{x.lineWidth=15;x.strokeStyle='#080b16';x.strokeText(l.toUpperCase(),640,300+(i-(lines.length-1)/2)*125,1120);x.fillText(l.toUpperCase(),640,300+(i-(lines.length-1)/2)*125,1120)});x.font='bold 38px system-ui';x.fillStyle='#d8f7ff';x.fillText('ROFLUXX',640,650)}
+$('thumbText').addEventListener('input',drawThumb);$('thumbColor').addEventListener('change',drawThumb);$('thumbBtn').onclick=()=>{drawThumb();$('thumb').scrollIntoView({behavior:'smooth',block:'center'})};$('downloadThumb').onclick=()=>{drawThumb();$('thumb').toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rofluxx-thumbnail.png';a.click();URL.revokeObjectURL(a.href)})};drawThumb();
+function loadGIS(){return new Promise((resolve,reject)=>{if(window.google?.accounts?.oauth2)return resolve();let n=0;const t=setInterval(()=>{if(window.google?.accounts?.oauth2){clearInterval(t);resolve()}else if(++n>50){clearInterval(t);reject(new Error('Google sign-in library did not load. Check your internet connection.'))}},200)})}
+$('connect').onclick=async()=>{
+ const id=$('clientId').value.trim();if(!id){setStatus('authStatus','Enter your Google OAuth Web Client ID first.','err');return}
+ try{await loadGIS();tokenClient=google.accounts.oauth2.initTokenClient({client_id:id,scope:'https://www.googleapis.com/auth/youtube.upload',callback:r=>{if(r.error){setStatus('authStatus',r.error,'err');return}accessToken=r.access_token;setStatus('authStatus','Connected. Token is temporary; reconnect when it expires.','ok');$('upload').disabled=false}});tokenClient.requestAccessToken({prompt:'consent'})}catch(e){setStatus('authStatus',e.message,'err')}
+};
+$('confirmRights').onchange=()=>{$('upload').disabled=!accessToken||!$('confirmRights').checked};
+$('upload').onclick=async()=>{
+ const file=editedBlob?new File([editedBlob],'rofluxx-edited.webm',{type:editedBlob.type}):sourceFile;
+ if(!file){setStatus('uploadStatus','Choose a video first.','err');return}
+ if(!accessToken){setStatus('uploadStatus','Connect YouTube first.','err');return}
+ const title=$('title').value.trim();if(!title){setStatus('uploadStatus','Create or enter a title first.','err');return}
+ $('upload').disabled=true;$('uploadBar').style.width='0%';
+ try{
+  const metadata={snippet:{title:title.slice(0,100),description:$('description').value,tags:$('tags').value.split(',').map(x=>x.trim()).filter(Boolean).slice(0,500),categoryId:$('kind').value},status:{privacyStatus:'unlisted',selfDeclaredMadeForKids:false}};
+  setStatus('uploadStatus','Starting secure YouTube upload…');
+  const init=await fetch('https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status',{method:'POST',headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json; charset=UTF-8','X-Upload-Content-Length':String(file.size),'X-Upload-Content-Type':file.type||'video/webm'},body:JSON.stringify(metadata)});
+  if(!init.ok)throw new Error('YouTube setup failed ('+init.status+'): '+await init.text());
+  const session=init.headers.get('Location');if(!session)throw new Error('YouTube did not return an upload session URL. Try again or use the official YouTube Studio app.');
+  setStatus('uploadStatus','Uploading video bytes. Keep this page open; large files may take time.');
+  const result=await fetch(session,{method:'PUT',headers:{Authorization:'Bearer '+accessToken,'Content-Type':file.type||'application/octet-stream'},body:file});
+  if(!result.ok)throw new Error('Upload failed ('+result.status+'): '+await result.text());
+  const data=await result.json();$('uploadBar').style.width='100%';setStatus('uploadStatus','Upload complete. Privacy is UNLISTED. Open YouTube Studio to review it.','ok');$('uploadedLink').innerHTML='Video: <a style="color:#64e5ff" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v='+encodeURIComponent(data.id)+'">youtube.com/watch?v='+escapeHtml(data.id)+'</a>';
+ }catch(e){setStatus('uploadStatus',e.message,'err')}finally{$('upload').disabled=!accessToken||!$('confirmRights').checked}
+};
+</script>
+</body></html>
